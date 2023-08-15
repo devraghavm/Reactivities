@@ -15,6 +15,7 @@ namespace Persistence.Migrations
                 name: "Activities",
                 columns: table => new
                 {
+                    // Id = table.Column<Guid>(type: "UNIQUEIDENTIFIER", nullable: false),
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Title = table.Column<string>(type: "TEXT", nullable: true),
                     Date = table.Column<DateTime>(type: "TEXT", nullable: false),

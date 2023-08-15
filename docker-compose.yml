@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  db:
+    image: 'mcr.microsoft.com/mssql/server:2022-latest'
+    ports:
+      - '1433:1433'
+    environment:
+      SA_PASSWORD: 'S3cur3P@ssW0rd!'
+      ACCEPT_EULA: 'Y'
+      MSSQL_PID: Express
+    healthcheck:
+      test: /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P "S3cur3P@ssW0rd!" -Q "SELECT 1" || exit 1
+      interval: 10s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+    networks:
+      mynetwork:
+        aliases:
+          - db1.internal.prod.example.com
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '8080:80'
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      mynetwork:
+        aliases:
+          - web1.internal.prod.example.com
+
+networks:
+  mynetwork:
+    driver: bridge

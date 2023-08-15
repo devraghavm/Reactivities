@@ -21,6 +21,7 @@ namespace Persistence.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        // .HasColumnType("UNIQUEIDENTIFIER");
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Category")
@@ -30,6 +31,7 @@ namespace Persistence.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("Date")
+                        // .HasColumnType("DATETIME");
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
